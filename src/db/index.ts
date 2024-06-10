@@ -10,14 +10,7 @@ sqlite.verbose();
 
 let connection: Connection;
 
-export const openDbConnection = async (): Promise<void> => {
-  connection = await open({
-    filename: DB_PATH,
-    driver: sqlite.Database,
-  });
-};
-
-export const createTasksTable = async (): Promise<void> => {
+const createTasksTable = async (): Promise<void> => {
   await connection.exec(`
     CREATE TABLE IF NOT EXISTS tasks
     (
@@ -30,6 +23,14 @@ export const createTasksTable = async (): Promise<void> => {
       timestamp INTEGER NOT NULL
     );
   `);
+};
+
+export const openDbConnection = async (): Promise<void> => {
+  connection = await open({
+    filename: DB_PATH,
+    driver: sqlite.Database,
+  });
+  await createTasksTable();
 };
 
 export const insert = async (task: Task): Promise<number> => {

@@ -5,11 +5,11 @@ import { EventEmitter } from 'node:events';
 import path from 'path';
 import handler from './src/tasks';
 import wsHandler from './src/ws';
-import { openDbConnection, createTasksTable, queryTasks } from './src/db';
+import { openDbConnection, queryTasks } from './src/db';
 
 const app = express();
-const port = 3000;
 
+const port = 3000;
 const server = http.createServer(app);
 const emitter = new EventEmitter();
 
@@ -26,6 +26,7 @@ app.get('/api/v1/tasks', async (request: Request, response: Response) => {
 });
 
 app.use(express.static('client/build'));
+
 app.get('*', (request: Request, response: Response) => {
   response.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
@@ -33,7 +34,8 @@ app.get('*', (request: Request, response: Response) => {
 server.listen(port, async () => {
   console.info(`Server is running on http://localhost:${port}`);
   await openDbConnection();
-  await createTasksTable();
   handler(emitter);
   wsHandler(server, emitter);
 });
+
+export default app;
