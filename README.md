@@ -1,7 +1,7 @@
 # ADP Tasks
 
 ## Before Starting
-You will need [Node.js](https://nodejs.org/en) to clone and run the application, make sure you have it installed and updated. 
+You will need [Node.js](https://nodejs.org/en) and [Git](https://www.git-scm.com/) to clone and run the application, make sure you have it installed and updated. 
 
 ## Getting Started
 
